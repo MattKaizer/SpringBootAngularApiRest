@@ -27,7 +27,7 @@ public class Cliente implements Serializable {
 	@Column(name="create_at")
 	@Temporal(TemporalType.DATE)
 	private Date createdAt;
-	@Column(name="delete_at")
+	@Column(name="delete_at", nullable=true)
 	@Temporal(TemporalType.DATE)
 	private Date deletedAt;
 	
