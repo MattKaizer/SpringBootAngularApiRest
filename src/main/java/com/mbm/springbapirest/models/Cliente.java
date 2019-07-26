@@ -8,9 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="clientes")
@@ -21,16 +27,27 @@ public class Cliente implements Serializable {
 	@Id 
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	@NotEmpty(message="no puede estar vacio")
+	@Size(min=4, max=15, message="El tamaño tiene que estar entre 4 y 15 caracteres")
+	@Column(nullable=false)
 	private String nombre;
+	@NotEmpty(message="no puede estar vacio")
+	@Column(nullable=false)
 	private String apellido;
+	@Column(nullable=false)
+	@NotEmpty(message="no puede estar vacio")
+	@Email(message="no es una direccion de correo bien formada")
 	private String email;
+	@NotNull(message="no puede estar vacio")
 	@Column(name="create_at")
 	@Temporal(TemporalType.DATE)
 	private Date createdAt;
-	@Column(name="delete_at", nullable=true)
-	@Temporal(TemporalType.DATE)
-	private Date deletedAt;
+
 	
+//	@PrePersist
+//	public void prePersistCreated() {
+//		this.createdAt = new Date();
+//	}
 
 	public Long getId() {
 		return id;
@@ -72,12 +89,12 @@ public class Cliente implements Serializable {
 		this.createdAt = createdAt;
 	}
 
-	public Date getDeletedAt() {
-		return deletedAt;
-	}
-
-	public void setDeletedAt(Date deletedAt) {
-		this.deletedAt = deletedAt;
-	}
+//	public Date getDeletedAt() {
+//		return deletedAt;
+//	}
+//
+//	public void setDeletedAt(Date deletedAt) {
+//		this.deletedAt = deletedAt;
+//	}
 
 }
